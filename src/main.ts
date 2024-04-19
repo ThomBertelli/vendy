@@ -1,4 +1,5 @@
 import './assets/main.css'
+import 'primevue/resources/themes/lara-light-amber/theme.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
