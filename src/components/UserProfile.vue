@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { auth } from '../auth'
+import { Auth } from '../auth'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
+const auth = new Auth()
 const isLoggedIn = ref(auth.isLoggedIn())
 const currentUser = ref(auth.currentUser())
 const signOut = function () {
