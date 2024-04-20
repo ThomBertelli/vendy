@@ -18,6 +18,7 @@ const email = defineModel<string>('email')
 const password = defineModel<string>('password')
 const remember = defineModel<boolean>('remember', { default: true })
 
+console.log(email.value)
 
 const showSuccessToast = () => {
     toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Seja bem-vindo(a)!', life: 3000 });

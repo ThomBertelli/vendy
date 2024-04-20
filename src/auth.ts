@@ -1,6 +1,7 @@
 import { createStorage, type SimpleStorage } from './storage'
-
+const apiUrl = import.meta.env.VITE_API_URL;
 class Auth {
+    
     private storage: SimpleStorage
     constructor(persistent = false) {
         this.storage = createStorage(persistent)
@@ -50,7 +51,7 @@ class Auth {
                 password: password
             }
         }
-        fetch("http://localhost:3000/sign_in", {
+        fetch(`${apiUrl}/sign_in`, {
             method: "POST",
             headers: {
                 "Accept": "application/json",
