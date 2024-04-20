@@ -3,7 +3,13 @@
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { Auth } from '../auth'
+
 import { useToast } from 'primevue/usetoast';
+import InputText from 'primevue/inputtext';
+import FloatLabel from 'primevue/floatlabel';
+import Password from 'primevue/password';
+import InputSwitch from 'primevue/inputswitch';
+import Button from 'primevue/button';
 
 const toast = useToast();
 const router = useRouter()
@@ -48,20 +54,29 @@ function onSubmit(form: Event) {
     <div class="flex flex-col justify-center items-center h-screen">
         <h1>Sign In</h1>
 
-        <form @submit.prevent="onSubmit">
-            <label>E-Mail: </label>
-            <input v-model="email" type="email" /><br />
+        <form class="flex flex-col gap-8 mt-10" @submit.prevent="onSubmit">
 
-            <label>Senha: </label>
-            <input v-model="password" type="password" /><br />
+            <FloatLabel>
+                <InputText v-model="email" type="email" id="email" inputType="email"/>
+                <label for="email">E-mail</label>
+            </FloatLabel>
+            
 
-            <label>Remember Me: </label>
-            <input v-model="remember" type="checkbox" /><br />
+
+            <FloatLabel>
+                <Password v-model="password" inputId="password" toggleMask :feedback="false" />
+                <label for="password">Senha</label>
+            </FloatLabel>
+            
             <Toast/>
+            <div class="flex items-center justify-center gap-3">
+                <label for="remember-me">Remember Me</label>
+                <InputSwitch v-model="remember" inputId="remember-me" />
+            </div>
 
-            <button type="submit" v-show="!awaiting">Sign In</button>
+            <Button label="Sign In" v-show="!awaiting"/>
         </form>
     </div>
 </template>
 
-<style lang="postcss" scoped></style>
+<style  scoped></style>
