@@ -12,10 +12,9 @@ const signOut = function () {
 </script>
 
 <template>
-    <main>
+    <div class="flex flex-col justify-center items-center h-screen">
         <template v-if="isLoggedIn">
-            <h3>Hi, {{ currentUser && currentUser.email }}</h3>
-            
+            <h3>Hi, {{ currentUser && currentUser.email }}</h3>     
             <nav>
                 <a @click="signOut">Sign Out</a>
             </nav>
@@ -26,7 +25,11 @@ const signOut = function () {
                 <RouterLink :to="{ name: 'signin'}"> Sign In </RouterLink>
             </nav>
         </template>
-    </main>
+    </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+
+
+</style>

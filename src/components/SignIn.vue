@@ -45,7 +45,7 @@ function onSubmit(form: Event) {
 </script>
 
 <template>
-    <div>
+    <div class="flex flex-col justify-center items-center h-screen">
         <h1>Sign In</h1>
 
         <form @submit.prevent="onSubmit">
