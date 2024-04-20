@@ -54,17 +54,17 @@ function onSubmit(form: Event) {
     <div class="flex flex-col justify-center items-center h-screen">
         <h1>Sign In</h1>
 
-        <form class="flex flex-col gap-8 mt-10" @submit.prevent="onSubmit">
+        <form class="flex flex-col gap-8 mt-10  " @submit.prevent="onSubmit">
 
             <FloatLabel>
-                <InputText v-model="email" type="email" id="email" inputType="email"/>
+                <InputText class="w-full" size="small" v-model="email" type="email" id="email" inputType="email"/>
                 <label for="email">E-mail</label>
             </FloatLabel>
             
 
 
             <FloatLabel>
-                <Password v-model="password" inputId="password" toggleMask :feedback="false" />
+                <Password class="w-full" v-model="password" inputId="password" toggleMask :feedback="false" />
                 <label for="password">Senha</label>
             </FloatLabel>
             
