@@ -17,7 +17,7 @@ const awaiting = ref(false)
 const email = defineModel<string>('email')
 const password = defineModel<string>('password')
 const remember = defineModel<boolean>('remember', { default: true })
-const validated = ref(false)
+
 
 const showSuccessToast = () => {
     toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Seja bem-vindo(a)!', life: 3000 });
@@ -28,7 +28,7 @@ const showErrorToast = () => {
 }
 
 
-function onSubmit(form: Event) {
+function onSubmit() {
     
     let auth = new Auth(remember.value)
     awaiting.value = true
