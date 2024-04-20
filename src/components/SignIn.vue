@@ -17,6 +17,7 @@ const awaiting = ref(false)
 const email = defineModel<string>('email')
 const password = defineModel<string>('password')
 const remember = defineModel<boolean>('remember', { default: true })
+const validated = ref(false)
 
 const showSuccessToast = () => {
     toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Seja bem-vindo(a)!', life: 3000 });
@@ -45,7 +46,7 @@ function onSubmit(form: Event) {
         }, () => {
             showErrorToast()
             awaiting.value = false
-            console.log('não foi dessa vez!')
+        
         })
 }
 </script>
@@ -57,14 +58,12 @@ function onSubmit(form: Event) {
         <form class="flex flex-col gap-8 mt-10  " @submit.prevent="onSubmit">
 
             <FloatLabel>
-                <InputText class="w-full" size="small" v-model="email" type="email" id="email" inputType="email"/>
+                <InputText class="w-full max-h-11" size="small" v-model="email" type="email" id="email" required/>
                 <label for="email">E-mail</label>
             </FloatLabel>
-            
-
 
             <FloatLabel>
-                <Password class="w-full" v-model="password" inputId="password" toggleMask :feedback="false" />
+                <Password class="w-full max-h-11" v-model="password" inputId="password" toggleMask :feedback="false" required />
                 <label for="password">Senha</label>
             </FloatLabel>
             
@@ -74,7 +73,7 @@ function onSubmit(form: Event) {
                 <InputSwitch v-model="remember" inputId="remember-me" />
             </div>
 
-            <Button @click="onSubmit"  label="Sign In" v-show="!awaiting"/>
+            <Button type="submit" label="Sign In" v-show="!awaiting" />
         </form>
     </div>
 </template>
