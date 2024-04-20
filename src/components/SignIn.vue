@@ -74,7 +74,7 @@ function onSubmit(form: Event) {
                 <InputSwitch v-model="remember" inputId="remember-me" />
             </div>
 
-            <Button label="Sign In" v-show="!awaiting"/>
+            <Button @click="onSubmit"  label="Sign In" v-show="!awaiting"/>
         </form>
     </div>
 </template>
