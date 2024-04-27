@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 import { useRouter } from 'vue-router'
-import { ref,watch } from 'vue'
+import { ref, watch } from 'vue'
 import { Auth } from '../auth'
 import { useToast } from 'primevue/usetoast';
 
@@ -65,9 +65,9 @@ function onSubmit() {
 
 
             <FloatLabel>
-                <PasswordInput class="w-full max-h-11" v-model="password" inputId="password" toggleMask
-                    :feedback="true" required promptLabel="Escolha sua senha"  weakLabel="Ruim" mediumLabel="Boa" strongLabel="Ótima" >
-                    
+                <PasswordInput class="w-full max-h-11" v-model="password" inputId="password" toggleMask :feedback="true"
+                    required promptLabel="Escolha sua senha" weakLabel="Ruim" mediumLabel="Boa" strongLabel="Ótima">
+
                     <template #footer>
                         <Divider />
                         <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
@@ -82,9 +82,10 @@ function onSubmit() {
             </FloatLabel>
 
             <FloatLabel>
-                <PasswordInput v-change class="w-full max-h-11" v-model="confirmPassword" inputId="confirm-password" toggleMask
-                    :feedback="false" required />
-                <label for="confirm-password">Repetir Senha</label>
+                <PasswordInput v-change class="w-full max-h-11" v-model="confirmPassword" inputId="confirm-password"
+                    toggleMask required :feedback="false">
+                </PasswordInput>
+                <label for="confirm-password">Confirmar Senha</label>
             </FloatLabel>
 
             <ToastPrime />
