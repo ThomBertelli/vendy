@@ -3,13 +3,8 @@
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { Auth } from '../auth'
-
 import { useToast } from 'primevue/usetoast';
-import InputText from 'primevue/inputtext';
-import FloatLabel from 'primevue/floatlabel';
-import Password from 'primevue/password';
-import InputSwitch from 'primevue/inputswitch';
-import Button from 'primevue/button';
+
 
 const toast = useToast();
 const router = useRouter()
@@ -17,8 +12,6 @@ const awaiting = ref(false)
 const email = defineModel<string>('email')
 const password = defineModel<string>('password')
 const remember = defineModel<boolean>('remember', { default: true })
-
-console.log(email.value)
 
 const showSuccessToast = () => {
     toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Seja bem-vindo(a)!', life: 3000 });
@@ -64,17 +57,17 @@ function onSubmit() {
             </FloatLabel>
 
             <FloatLabel>
-                <Password class="w-full max-h-11" v-model="password" inputId="password" toggleMask :feedback="false" required />
+                <PasswordInput class="w-full max-h-11" v-model="password" inputId="password" toggleMask :feedback="false" required />
                 <label for="password">Senha</label>
             </FloatLabel>
             
-            <Toast/>
+            <ToastPrime/>
             <div class="flex items-center justify-center gap-3">
                 <label for="remember-me">Remember Me</label>
                 <InputSwitch v-model="remember" inputId="remember-me" />
             </div>
 
-            <Button type="submit" label="Sign In" v-show="!awaiting" />
+            <ButtonPrime type="submit" label="Sign In" v-show="!awaiting" />
         </form>
     </div>
 </template>
