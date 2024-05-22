@@ -12,13 +12,22 @@ const signOut = function () {
 </script>
 
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col ">
         <template v-if="isLoggedIn">
             <div class="flex flex-col items-center gap-2">
-                <h3>Olá, {{ currentUser && currentUser.email }}</h3>     
-                <nav>
-                    <ButtonPrime @click="signOut">Sign Out</ButtonPrime>
-                </nav>
+                <div>
+                    <h3>Olá, {{ currentUser && currentUser.email }}</h3>     
+                </div>
+                <div class="flex gap-2">
+                    <nav>
+                        <ButtonPrime @click="signOut">Sair</ButtonPrime>
+                    </nav>
+                    <nav>
+                        <ButtonPrime  >
+                            <RouterLink :to="{name: 'stores'}"> Lojas</RouterLink>
+                        </ButtonPrime>
+                    </nav>
+                </div>
             </div>
         </template>
         <template  v-else>
