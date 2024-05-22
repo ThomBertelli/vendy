@@ -33,7 +33,7 @@ function onSubmit() {
     let auth = new Auth()
     awaiting.value = true
 
-    auth.signIn(email.value || ''
+    auth.signUp(email.value || ''
 
         , password.value || ''
 

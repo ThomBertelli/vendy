@@ -1,6 +1,6 @@
 import { createStorage, type SimpleStorage } from './storage'
 const apiUrl = import.meta.env.VITE_API_URL;
-const apiCredential = import.meta.env.CREDENTIAL
+const apiCredential = import.meta.env.VITE_API_CREDENTIAL
 class Auth {
     
     private storage: SimpleStorage
@@ -57,7 +57,7 @@ class Auth {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "X-API-KEY": apiCredential
+                "X-API-KEY": `${apiCredential}`
             },
             body: JSON.stringify(body)
         }).then((response) => {
@@ -67,6 +67,30 @@ class Auth {
                 this.failure(response, onFailure)
             }
         })
+    }
+
+    async signUp(email: string, password: string, onSuccess: () => void, onFailure: () => void) {
+        const body = {
+            user: {
+                email: email,
+                password: password
+            }
+        };
+        fetch(`${apiUrl}/new`, {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "X-API-KEY": `${apiCredential}`
+            },
+            body: JSON.stringify(body)
+        }).then((response) => {
+            if (response.ok) {
+                this.success(response, onSuccess);
+            } else {
+                this.failure(response, onFailure);
+            }
+        });
     }
 
 }
