@@ -1,5 +1,6 @@
 import { createStorage, type SimpleStorage } from './storage'
 const apiUrl = import.meta.env.VITE_API_URL;
+const apiCredential = import.meta.env.CREDENTIAL
 class Auth {
     
     private storage: SimpleStorage
@@ -55,7 +56,8 @@ class Auth {
             method: "POST",
             headers: {
                 "Accept": "application/json",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-API-KEY": apiCredential
             },
             body: JSON.stringify(body)
         }).then((response) => {
