@@ -48,7 +48,7 @@ const onSubmit = async () => {
 
 <template>
     <div class="flex flex-col items-center">
-        <h1>Cadastrar</h1>
+        <h1>Faça seu <strong>Cadastro</strong></h1>
 
         <form class="flex flex-col gap-8 mt-10  " @submit.prevent="onSubmit">
 
@@ -72,12 +72,13 @@ const onSubmit = async () => {
                 >
 
                     <template #footer>
-                        <Divider />
+                        
+                        <p>Sugestões:</p>
                         <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-                            <li>Teve ter uma letra minúscula</li>
-                            <li>Teve ter uma letra maiúscula</li>
-                            <li>Teve ter um número</li>
-                            <li>No mínimo 8 caractéres</li>
+                            <li>No mínimo 6 caractéres</li>
+                            <li>Pelo menos um número</li>
+                            <li>Pelo menos uma letra maiúscula</li>
+                            <li>Pelo menos uma letra minúscula</li>
                         </ul>
                     </template>
                 </PasswordInput>
@@ -104,7 +105,7 @@ const onSubmit = async () => {
 
             <ToastPrime />
 
-            <ButtonPrime :disabled="!passwordMatch" type="submit" label="Sign Up" v-show="!awaiting" />
+            <ButtonPrime :disabled="!passwordMatch" type="submit" label="Cadastrar" v-show="!awaiting" />
         </form>
     </div>
 </template>

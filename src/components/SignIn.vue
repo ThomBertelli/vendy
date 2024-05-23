@@ -64,7 +64,7 @@ const onSubmit = async () => {
 
 <template>
     <div class="flex flex-col justify-center items-center">
-        <h1>Sign In</h1>
+        <h1>Faça seu <strong>Login</strong></h1>
 
         <form class="flex flex-col gap-8 mt-10  " @submit.prevent="onSubmit">
 
@@ -81,11 +81,11 @@ const onSubmit = async () => {
 
             <ToastPrime />
             <div class="flex items-center justify-center gap-3">
-                <label for="remember-me">Remember Me</label>
+                <label for="remember-me">Lembrar de mim</label>
                 <InputSwitch v-model="remember" inputId="remember-me" />
             </div>
 
-            <ButtonPrime type="submit" label="Sign In" v-show="!awaiting" />
+            <ButtonPrime type="submit" label="Entrar" v-show="!awaiting" />
         </form>
     </div>
 </template>
