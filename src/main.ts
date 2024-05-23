@@ -8,19 +8,21 @@ import App from './App.vue';
 import router from './router';
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
-
 import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
 import Password from 'primevue/password';
 import InputSwitch from 'primevue/inputswitch';
 import Button from 'primevue/button';
 import Toast from 'primevue/toast';
+import { createPinia } from 'pinia';
 
 const app = createApp(App);
+const pinia = createPinia();
 
 app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
+app.use(pinia)
 
 app.component('ToastPrime', Toast);
 app.component('FloatLabel', FloatLabel);
