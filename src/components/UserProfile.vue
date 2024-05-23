@@ -33,7 +33,7 @@ const signOut = function () {
         <template  v-else>
             <div class="flex gap-3">
                 <nav>
-                    <ButtonPrime>
+                    <ButtonPrime class="custom-button">
                         <RouterLink :to="{ name: 'signin'}"> Entrar </RouterLink>
                     </ButtonPrime>
                 </nav>
@@ -48,7 +48,17 @@ const signOut = function () {
 </template>
 
 <style scoped>
+    .custom-button{
+        background-color: white;
+        color: #f59e0b ;
+        border: solid #f59e0b 1px;
+    }
 
+    .custom-buttom :hover{
+        color: #d97706;
+        border: #d97706;
+    }
+    
 
 
 </style>

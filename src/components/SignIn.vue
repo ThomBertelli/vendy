@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { Auth } from '../auth'
 import { useToast } from 'primevue/usetoast';
+import Divider from 'primevue/divider';
 
 
 const toast = useToast();
@@ -46,7 +47,7 @@ function onSubmit() {
 </script>
 
 <template>
-    <div class="flex flex-col justify-center items-center h-screen">
+    <div class="flex flex-col justify-center items-center">
         <h1>Sign In</h1>
 
         <form class="flex flex-col gap-8 mt-10  " @submit.prevent="onSubmit">

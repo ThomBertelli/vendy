@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import { Auth } from '../auth'
 import { useToast } from 'primevue/usetoast';
+import Divider from 'primevue/divider';
 
 
 const toast = useToast();
@@ -53,8 +54,8 @@ function onSubmit() {
 </script>
 
 <template>
-    <div class="flex flex-col justify-center items-center h-screen">
-        <h1>Sign Up</h1>
+    <div class="flex flex-col items-center">
+        <h1>Cadastrar</h1>
 
         <form class="flex flex-col gap-8 mt-10  " @submit.prevent="onSubmit">
 
@@ -65,8 +66,17 @@ function onSubmit() {
 
 
             <FloatLabel>
-                <PasswordInput class="w-full max-h-11" v-model="password" inputId="password" toggleMask :feedback="true"
-                    required promptLabel="Escolha sua senha" weakLabel="Ruim" mediumLabel="Boa" strongLabel="Ótima">
+                <PasswordInput 
+                    class="w-full max-h-11" 
+                    v-model="password" 
+                    inputId="password" 
+                    toggleMask
+                    :feedback="true"
+                    required promptLabel="Escolha sua senha" 
+                    weakLabel="Ruim" 
+                    mediumLabel="Boa" 
+                    strongLabel="Ótima"
+                >
 
                     <template #footer>
                         <Divider />
@@ -82,11 +92,22 @@ function onSubmit() {
             </FloatLabel>
 
             <FloatLabel>
-                <PasswordInput v-change class="w-full max-h-11" v-model="confirmPassword" inputId="confirm-password"
-                    toggleMask required :feedback="false">
+                <PasswordInput 
+                    class="w-full max-h-11" 
+                    v-model="confirmPassword" 
+                    inputId="confirm-password"
+                    toggleMask 
+                    required 
+                    :feedback="false"
+                >
+                
                 </PasswordInput>
                 <label for="confirm-password">Confirmar Senha</label>
+                <small id="confirm-password-help" class="block mt-1 text-red-500 text-sm" v-if="confirmPassword && !passwordMatch">
+                Deve coincidir com a senha
+                </small>
             </FloatLabel>
+            
 
             <ToastPrime />
 

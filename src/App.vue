@@ -7,9 +7,9 @@ import HeaderComponent from '@/components/HeaderComponent.vue'
 </script>
 <template>
 
-  <div>
+  <div class="flex flex-col justify-center h-screen">
 
-    <header>
+    <header class="fixed top-0 w-full ">
       <HeaderComponent/>
     </header>
     <RouterView />
