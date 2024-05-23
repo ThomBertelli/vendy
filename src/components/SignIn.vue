@@ -4,8 +4,6 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/authStore';
 import { useToast } from 'primevue/usetoast';
-import Divider from 'primevue/divider';
-
 
 const toast = useToast();
 const router = useRouter()

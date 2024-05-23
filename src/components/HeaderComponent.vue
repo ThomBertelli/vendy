@@ -29,7 +29,7 @@ const signOut = () => {
                 </div>
                 <div class="flex gap-2">
                     <nav>
-                        <ButtonPrime @click="signOut">Sair</ButtonPrime>
+                        <ButtonPrime class="custom-button" @click="signOut">Sair</ButtonPrime>
                     </nav>
                     <nav>
                         <ButtonPrime  >
