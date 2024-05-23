@@ -2,7 +2,7 @@
 
 import { useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
-import { Auth } from '../auth'
+import { useAuthStore } from '@/stores/authStore';
 import { useToast } from 'primevue/usetoast';
 import Divider from 'primevue/divider';
 
@@ -14,6 +14,7 @@ const email = defineModel<string>('email')
 const password = defineModel<string>('password')
 const confirmPassword = defineModel<string>('confirmPassword')
 const passwordMatch = ref(false)
+const authStore = useAuthStore();
 
 watch([password, confirmPassword], () => {
     passwordMatch.value = password.value === confirmPassword.value;
@@ -21,36 +22,28 @@ watch([password, confirmPassword], () => {
 
 
 const showSuccessToast = () => {
-    toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Seja bem-vindo(a)!', life: 3000 });
+    toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Cadastro realizado!', life: 3000 });
 }
 
-const showErrorToast = () => {
-    toast.add({ severity: 'error', summary: 'Erro', detail: 'Email e/ou senha incorretos!', life: 3000 });
+const showErrorToast = (errorMessage: string) => {
+    toast.add({ severity: 'error', summary: 'Erro', detail: errorMessage, life: 3000 });
 }
 
-
-function onSubmit() {
-
-    let auth = new Auth()
-    awaiting.value = true
-
-    auth.signUp(email.value || ''
-
-        , password.value || ''
-
-        , () => {
-            showSuccessToast()
-            awaiting.value = false
+const onSubmit = async () => {
+    try {
+        await authStore.signUp(email.value || '', password.value || '',  () => {
+            showSuccessToast();
             setTimeout(() => {
                 router.push('/')
             }, 3005)
-
         }, () => {
-            showErrorToast()
-            awaiting.value = false
+            showErrorToast('Email já cadastrados!');
+        });
+    } catch (error:any) {
+        showErrorToast(error.message);
+    }
+};
 
-        })
-}
 </script>
 
 <template>
