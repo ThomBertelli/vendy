@@ -2,9 +2,15 @@
 import { RouterLink } from 'vue-router'
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores/authStore';
+import { onMounted } from 'vue';
 
 const authStore = useAuthStore();
 const { isLoggedIn, currentUser } = storeToRefs(authStore);
+
+onMounted(()=>{
+    authStore.checkAuth()
+})
+
 
 const signOut = () => {
     authStore.signOut();
