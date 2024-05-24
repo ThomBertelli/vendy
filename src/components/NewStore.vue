@@ -54,8 +54,8 @@ const onSubmit = async (event: Event) => {
 </script>
 
 <template>
-    <div>
-        <h1>Nova loja</h1>
+    <div class="flex flex-col items-center">
+        <h1> Crie uma <strong>Nova Loja</strong></h1>
         <form class="flex flex-col gap-8 mt-10  " @submit="onSubmit">
             <FloatLabel>
                 <InputText class="w-full max-h-11" size="small" v-model="storeName" type="text" id="storeName"
