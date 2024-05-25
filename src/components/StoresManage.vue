@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import { RouterLink } from 'vue-router'
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router';
+import { useStore } from '../stores/useStore';
 
 const apiUrl = import.meta.env.VITE_API_URL;
-
+const router = useRouter();
 const storesList = ref()
+const storePinia = useStore();
 
 const fetchProdutos = async () => {
     try {
@@ -28,6 +31,16 @@ const fetchProdutos = async () => {
 }
 
 onMounted(() => {fetchProdutos()})
+
+const redirectToEdit = (id: string, storeName: string) => {
+    storePinia.setCurrentStore(id, storeName);
+    router.push({ name: 'EditStore' });
+};
+
+const handleEditStore = (storeId: string, storeName: string) => {
+    redirectToEdit(storeId, storeName);
+};
+
 </script>
 
 <template>
@@ -47,7 +60,7 @@ onMounted(() => {fetchProdutos()})
                         {{ store.name }}
                     </h3>
                     <div class="flex gap-4">
-                        <i class="pi pi-pen-to-square cursor-pointer text-blue-500" style="font-size: 1.5rem"></i>
+                        <i @click="handleEditStore(store.id,store.name)" class="pi pi-pen-to-square cursor-pointer text-blue-500" style="font-size: 1.5rem"></i>
                         <i class="pi pi-plus-circle cursor-pointer text-green-500" style="font-size: 1.5rem"></i>
                         <i class="pi pi-trash cursor-pointer text-red-500" style="font-size: 1.5rem; color:red"></i>
                     </div>
