@@ -32,18 +32,25 @@ onMounted(() => {fetchProdutos()})
 
 <template>
     <div>
-        <h1>Lojas</h1>
+        <h1 class="mt-20 text-center"> Administre as suas <strong>Lojas</strong></h1>
 
-        <div>
+        <div class="fixed bottom-20 right-20">
             <RouterLink :to="{ name: 'new-store' }">
                 <ButtonPrime>Criar Loja</ButtonPrime>
             </RouterLink>
         </div>
 
-        <div>
-            <ul>
-                <li v-for="store in storesList" :key="store.id">
-                    {{ store.name }}
+        <div class="mt-20">
+            <ul class="flex flex-col gap-4 ">
+                <li v-for="store in storesList" :key="store.id" class=" items-center pt-2 pb-2 pl-6 pr-6 flex gap-20 rounded-md border border-amber-600 ">
+                    <h3 class="flex-1 text-xl text-amber-600">
+                        {{ store.name }}
+                    </h3>
+                    <div class="flex gap-4">
+                        <i class="pi pi-pen-to-square cursor-pointer text-blue-500" style="font-size: 1.5rem"></i>
+                        <i class="pi pi-plus-circle cursor-pointer text-green-500" style="font-size: 1.5rem"></i>
+                        <i class="pi pi-trash cursor-pointer text-red-500" style="font-size: 1.5rem; color:red"></i>
+                    </div>
                 </li>
             </ul>
         </div>
