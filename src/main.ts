@@ -14,6 +14,7 @@ import Password from 'primevue/password';
 import InputSwitch from 'primevue/inputswitch';
 import Button from 'primevue/button';
 import Toast from 'primevue/toast';
+import InputNumber from 'primevue/inputnumber';
 import { createPinia } from 'pinia';
 
 const app = createApp(App);
@@ -30,5 +31,6 @@ app.component('PasswordInput', Password);
 app.component('InputSwitch', InputSwitch);
 app.component('ButtonPrime', Button);
 app.component('InputText', InputText);
+app.component('InputNumber',InputNumber)
 
 app.mount('#app');

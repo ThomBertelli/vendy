@@ -22,4 +22,7 @@ export default defineConfig({
     // Expor as variáveis de ambiente para o cliente (navegador)
     'import.meta.env': JSON.stringify(dotenv.config().parsed),
   },
+  build: {
+    sourcemap: true,  // Ensure source maps are enabled
+  }
 })
