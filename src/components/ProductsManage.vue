@@ -1,20 +1,20 @@
 <script lang="ts" setup>
 import { computed,ref,onMounted } from 'vue';
 import { useStore } from '../stores/useStore';
-import { useRouter } from 'vue-router';
+import ProgressSpinner from 'primevue/progressspinner';
 
-
-
+const store = useStore();
+const storeId = computed(() => store.currentStore.id);
+const storeName = computed(() => store.currentStore.name);
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const apiCredential = import.meta.env.VITE_API_CREDENTIAL
-const store = useStore();
-const storeId = computed(() => store.currentStore?.id);
-const storeName = computed(() => store.currentStore.name);
 const productsList = ref();
 
-const fetchProducts = async () => {
+const loading = ref(false);
 
+const fetchProducts = async () => {
+    loading.value = true;
 
 
     try {
@@ -29,8 +29,10 @@ const fetchProducts = async () => {
 
         )
         if (!response.ok) {
+            
             throw new Error('Erro ao buscar produtos')
         }
+        loading.value = false
         const data = await response.json()
 
         productsList.value = data.result.products
@@ -40,7 +42,10 @@ const fetchProducts = async () => {
     }
 }
 
-onMounted(() => { fetchProducts() })
+onMounted(() => { 
+    fetchProducts()
+    
+}   )
 
 
 
@@ -48,8 +53,8 @@ onMounted(() => { fetchProducts() })
 
 <template>
     <div>
-        <h1>Produtos da loja <strong>{{ storeName }}</strong></h1>
-
+        <h1 class="mt-20 text-center">Produtos da loja <strong>{{ storeName }}</strong></h1>
+        <ProgressSpinner v-if="loading"></ProgressSpinner>
         <div class="mt-20">
             <div class="flex flex-col items-center">
                 <ul class="flex flex-col gap-4 ">
