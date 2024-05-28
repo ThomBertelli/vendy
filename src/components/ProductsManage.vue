@@ -2,11 +2,14 @@
 import { computed,ref,onMounted } from 'vue';
 import { useStore } from '../stores/useStore';
 import ProgressSpinner from 'primevue/progressspinner';
+import { useProduct } from '../stores/useProduct';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const store = useStore();
 const storeId = computed(() => store.currentStore.id);
 const storeName = computed(() => store.currentStore.name);
-
+const productPinia = useProduct();
 const apiUrl = import.meta.env.VITE_API_URL;
 const apiCredential = import.meta.env.VITE_API_CREDENTIAL
 const productsList = ref();
@@ -48,6 +51,11 @@ onMounted(() => {
 }   )
 
 
+const handleEditProduct = (id: string, title: string, price:string) => {
+    productPinia.setCurrentProduct(id, title, price);
+    router.push({ name: 'edit-product' });
+};
+
 
 </script>
 
@@ -69,7 +77,7 @@ onMounted(() => {
                                 {{ product.price }}
                             </h3>
                             <div class="flex gap-4">
-                                <i class="pi pi-pen-to-square heartbeat cursor-pointer text-blue-500" style="font-size: 1.5rem"></i>
+                                <i @click="handleEditProduct(product.id, product.title, product.price)" class="pi pi-pen-to-square heartbeat cursor-pointer text-blue-500" style="font-size: 1.5rem"></i>
                                 <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"></i>
                             </div>
                     </li>

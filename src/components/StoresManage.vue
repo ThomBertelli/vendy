@@ -63,9 +63,9 @@ const handleEditStore = (storeId: string, storeName: string) => {
             <ul class="flex flex-col gap-4 ">
                 <li v-for="store in storesList" 
                     :key="store.id"
-                    @click="redirectToProducts(store.id,store.name)"
                     class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-20 rounded-md border border-amber-600 ">
-                    <h3 class="store-name flex-1 text-xl text-amber-600">
+                    <h3 class="store-name flex-1 text-xl text-amber-600"
+                        @click="redirectToProducts(store.id,store.name)">
                         {{ store.name }}
                     </h3>
                     <div class="flex gap-4">
