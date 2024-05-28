@@ -70,7 +70,7 @@ onMounted(() => {
                             </h3>
                             <div class="flex gap-4">
                                 <i class="pi pi-pen-to-square heartbeat cursor-pointer text-blue-500" style="font-size: 1.5rem"></i>
-                                <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem; color:red"></i>
+                                <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"></i>
                             </div>
                     </li>
                 </ul>

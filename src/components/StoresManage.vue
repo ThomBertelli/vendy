@@ -71,7 +71,7 @@ const handleEditStore = (storeId: string, storeName: string) => {
                     <div class="flex gap-4">
                         <i @click="handleEditStore(store.id, store.name)"
                             class="pi pi-pen-to-square heartbeat cursor-pointer text-blue-500" style="font-size: 1.5rem"></i>
-                        <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem; color:red"></i>
+                        <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"></i>
                     </div>
                 </li>
             </ul>
