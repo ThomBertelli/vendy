@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-export const useStore = defineStore('main', {
+export const useProduct = defineStore('main', {
     state: () => ({
         currentProduct: {
             id: localStorage.getItem('currentProductId') || null,
