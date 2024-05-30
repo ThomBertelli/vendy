@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed,ref,onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useStore } from '../stores/useStore';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useProduct } from '../stores/useProduct';
@@ -26,13 +26,13 @@ const fetchProducts = async () => {
                 'Accept': 'application/json',
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 "X-API-KEY": `${apiCredential}`,
-                
+
             },
         }
 
         )
         if (!response.ok) {
-            
+
             throw new Error('Erro ao buscar produtos')
         }
         loading.value = false
@@ -45,15 +45,40 @@ const fetchProducts = async () => {
     }
 }
 
-onMounted(() => { 
+onMounted(() => {
     fetchProducts()
-    
-}   )
+
+})
 
 
-const handleEditProduct = (id: string, title: string, price:string) => {
+const handleEditProduct = (id: string, title: string, price: string) => {
     productPinia.setCurrentProduct(id, title, price);
     router.push({ name: 'edit-product' });
+};
+
+
+const toggleActive = async (id: number) => {
+    try {
+        const url = `${apiUrl}/products/${id}/toggle_active`;
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'X-API-KEY': `${apiCredential}`,
+            },
+        });
+        if (response.ok) {
+            const data = await response.json();
+
+            console.log(data)
+        } else {
+            const errorData = await response.json();
+
+        }
+    } catch (error: any) {
+        console.log(error)
+    }
 };
 
 
@@ -65,29 +90,33 @@ const handleEditProduct = (id: string, title: string, price:string) => {
         <ProgressSpinner v-if="loading"></ProgressSpinner>
         <div class="mt-20">
             <div class="flex flex-col items-center">
-                <ul class="flex flex-col gap-4 ">
-                    <li v-for="product in productsList" 
-                        :key="product.id"
-                        
-                        class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-20 rounded-md border border-amber-600 ">
-                            <h3  class="flex-1 text-xl text-amber-600">
-                                {{ product.title }}
-                            </h3>
-                            <h3 class="text-xl text-amber-600">
-                                {{ product.price }}
-                            </h3>
-                            <div class="flex gap-4">
-                                <i @click="handleEditProduct(product.id, product.title, product.price)" class="pi pi-pen-to-square heartbeat cursor-pointer text-blue-500" style="font-size: 1.5rem"></i>
-                                <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"></i>
-                            </div>
+                <ul class="flex flex-col gap-2 ">
+                    <li v-for="product in productsList" :key="product.id"
+                        class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-11 rounded-md border border-amber-600 ">
+                        <h3 class="flex-1 text-xl text-amber-600">
+                            {{ product.title }}
+                        </h3>
+                        <h3 class="text-xl text-amber-600">
+                            {{ product.price }}
+                        </h3>
+                        <div class="flex text-center text-amber-600 gap-2">
+                            <label for="toogle-active"> {{ product.active ? 'Desativar' : 'Ativar' }}</label>
+                            <InputSwitch @change="toggleActive(product.id)" v-model="product.active" inputId="toogle-active" />
+                        </div>
+                        <div class="flex gap-4">
+                            <i @click="handleEditProduct(product.id, product.title, product.price)"
+                                class="pi pi-pen-to-square heartbeat cursor-pointer text-blue-500"
+                                style="font-size: 1.5rem"></i>
+                            <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"></i>
+                        </div>
                     </li>
                 </ul>
 
-               
+
 
             </div>
-            
-            
+
+
         </div>
 
         <div class="fixed bottom-20 right-20">
@@ -99,6 +128,4 @@ const handleEditProduct = (id: string, title: string, price:string) => {
     </div>
 </template>
 
-<style lang="css" scoped>
-    
-</style>
+<style lang="css" scoped></style>
