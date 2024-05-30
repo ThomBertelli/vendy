@@ -1,68 +1,62 @@
 <script lang="ts" setup>
-import InputText from 'primevue/inputtext';
-import ButtonPrime from 'primevue/button';
-import { useToast } from 'primevue/usetoast';
-import { computed } from 'vue';
-import { useStore } from '../stores/useStore';
-import { useRouter } from 'vue-router';
+import InputText from 'primevue/inputtext'
+import ButtonPrime from 'primevue/button'
+import { useToast } from 'primevue/usetoast'
+import { computed, ref } from 'vue'
+import { useStore } from '../stores/useStore'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
-const toast = useToast();
-const apiUrl = import.meta.env.VITE_API_URL;
+const router = useRouter()
+const toast = useToast()
+const apiUrl = import.meta.env.VITE_API_URL
 const apiCredential = import.meta.env.VITE_API_CREDENTIAL
-const store = useStore();
-const storeId = computed(() => store.currentStore.id);
+const store = useStore()
+const storeId = computed(() => store.currentStore.id)
 const storeName = computed({
     get: () => store.currentStore.name,
     set: (value: string) => store.setCurrentStore(storeId.value, value)
-});
-
+})
 
 const showSuccessToast = () => {
-    toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Loja atualizada!', life: 3000 });
+    toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Loja atualizada!', life: 3000 })
 }
 
 const showErrorToast = (errorMessage: string) => {
-    toast.add({ severity: 'error', summary: 'Erro', detail: errorMessage, life: 3000 });
+    toast.add({ severity: 'error', summary: 'Erro', detail: errorMessage, life: 3000 })
 }
 
-
-
 const updateStore = async (event: Event) => {
-    event.preventDefault();
-    const name = storeName.value;
+    event.preventDefault()
+    const name = storeName.value
     const id = storeId.value
     const body = {
         store: {
-            name: name,
+            name: name
         }
-    };
+    }
     try {
         const response = await fetch(`${apiUrl}/stores/${id}`, {
-            method: "PATCH",
+            method: 'PATCH',
             headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "X-API-KEY": `${apiCredential}`,
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-API-KEY': `${apiCredential}`,
+                Authorization: `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify(body)
-        });
+        })
         if (response.ok) {
             showSuccessToast()
             setTimeout(() => {
                 router.push('/stores')
             }, 3005)
-
         } else {
-            const errorData = await response.json();
-            showErrorToast(errorData.message || 'Erro ao atualizar a loja.');
-
+            const errorData = await response.json()
+            showErrorToast(errorData.message || 'Erro ao atualizar a loja.')
         }
     } catch (error: any) {
-        showErrorToast(error.message || 'Erro de rede ou servidor.');
+        showErrorToast(error.message || 'Erro de rede ou servidor.')
     }
-
 }
 
 

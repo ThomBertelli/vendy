@@ -3,6 +3,7 @@ import 'primevue/resources/themes/lara-light-amber/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 
+
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -16,6 +17,9 @@ import Button from 'primevue/button';
 import Toast from 'primevue/toast';
 import InputNumber from 'primevue/inputnumber';
 import { createPinia } from 'pinia';
+import FileUpload from 'primevue/fileupload';
+import Tooltip from 'primevue/tooltip';
+import Dialog from 'primevue/dialog';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -32,5 +36,9 @@ app.component('InputSwitch', InputSwitch);
 app.component('ButtonPrime', Button);
 app.component('InputText', InputText);
 app.component('InputNumber',InputNumber)
+app.component('FileUpload',FileUpload)
+app.component('DialogPrime',Dialog)
+
+app.directive('tooltip', Tooltip);
 
 app.mount('#app');

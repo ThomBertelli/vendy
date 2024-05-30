@@ -9,6 +9,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const router = useRouter();
 const storesList = ref()
 const storePinia = useStore();
+const visible = ref(false);
+const idStoreLogo = ref()
 
 const fetchStores = async () => {
     try {
@@ -72,6 +74,37 @@ const toggleActive = async (id: number) => {
     }
 };
 
+const setIdStoreLogo = (id)=>{
+    idStoreLogo.value = id
+}
+
+const uploadLogo = async (event) => {
+    const file = event.files[0]
+    const formData = new FormData()
+    formData.append('store[logo]', file)
+    
+
+    try {
+        const response = await fetch(`${apiUrl}/stores/${idStoreLogo.value}/upload_logo`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'X-API-KEY': `${apiCredential}`,
+            },
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao enviar a imagem')
+        }
+
+        const data = await response.json()
+        console.log('Imagem enviada com sucesso', data)
+    } catch (error) {
+        console.error('Erro ao enviar a imagem', error)
+    }
+    fetchStores()
+}
 
 </script>
 
@@ -85,24 +118,44 @@ const toggleActive = async (id: number) => {
             </RouterLink>
         </div>
 
+        <DialogPrime v-model:visible="visible" modal header="Editar Logo"  :style="{ width: '25rem' }">
+
+            <div>
+                <FileUpload chooseLabel="Selecionar " mode="basic" @uploader="uploadLogo($event)" accept="image/*" :maxFileSize="1000000" :multiple="false" name="logo[]" :customUpload="true" />
+            </div>
+
+        </DialogPrime>
+
+
         <div class="mt-20">
             <ul class="flex flex-col gap-4 ">
                 <li v-for="store in storesList" :key="store.id"
-                    class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-20 rounded-md border border-amber-600 ">
-                    <h3 class="store-name flex-1 text-xl text-amber-600"
-                        @click="redirectToProducts(store.id, store.name)">
+                    class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-5 rounded-md border border-amber-600 ">
+                    <div @click="visible=true, setIdStoreLogo(store.id)" v-if="store.logo_url" class="cursor-pointer"  v-tooltip="'Mudar Logo'">
+                        <img class="logo-image"  :src="store.logo_url" alt="">
+
+                    </div>
+                    <div v-else @click="visible=true, setIdStoreLogo(store.id)" v-tooltip="'Add logo'" class="flex flex-col cursor-pointer heartbeat items-center text-green-600  ">
+                        <i class="pi pi-image text-2xl"></i>
+                        
+                    </div>
+
+                    <h3 class="store-name text-center flex-1 text-xl text-amber-600"
+                        @click="redirectToProducts(store.id, store.name)"
+                        v-tooltip="'Ver produtos'">
                         {{ store.name }}
                     </h3>
-                    <div class="flex text-center text-amber-600 gap-2">
-                        <label for="toogle-active"> {{ store.active ? 'Desativar' : 'Ativar' }}</label>
+                    <div class="flex text-amber-600 gap-2">
+                        <label class="text-center" for="toogle-active"> {{ store.active ? 'Desativar' : 'Ativar' }}</label>
                         <InputSwitch @change="toggleActive(store.id)" v-model="store.active"
                             inputId="toogle-active" />
                     </div>
                     <div class="flex gap-4">
                         <i @click="handleEditStore(store.id, store.name)"
                             class="pi pi-pen-to-square heartbeat cursor-pointer text-blue-500"
-                            style="font-size: 1.5rem"></i>
-                        <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"></i>
+                            style="font-size: 1.5rem" 
+                            v-tooltip="'Editar'"></i>
+                        <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"  v-tooltip="'Excluir'"></i>
                     </div>
                 </li>
             </ul>
@@ -128,5 +181,9 @@ const toggleActive = async (id: number) => {
     100% {
         transform: scale(1);
     }
+}
+
+.logo-image{
+    width: 2em;
 }
 </style>
