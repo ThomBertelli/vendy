@@ -20,6 +20,8 @@ import { createPinia } from 'pinia';
 import FileUpload from 'primevue/fileupload';
 import Tooltip from 'primevue/tooltip';
 import Dialog from 'primevue/dialog';
+import ConfirmDialog from 'primevue/confirmdialog';
+import ConfirmationService from 'primevue/confirmationservice';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -28,6 +30,7 @@ app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
 app.use(pinia)
+app.use(ConfirmationService)
 
 app.component('ToastPrime', Toast);
 app.component('FloatLabel', FloatLabel);
@@ -38,6 +41,7 @@ app.component('InputText', InputText);
 app.component('InputNumber',InputNumber)
 app.component('FileUpload',FileUpload)
 app.component('DialogPrime',Dialog)
+app.component('ConfirmDialog',ConfirmDialog)
 
 app.directive('tooltip', Tooltip);
 

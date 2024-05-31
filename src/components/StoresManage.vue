@@ -3,6 +3,8 @@ import { RouterLink } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from '../stores/useStore';
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 
 const apiCredential = import.meta.env.VITE_API_CREDENTIAL
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -11,6 +13,9 @@ const storesList = ref()
 const storePinia = useStore();
 const visible = ref(false);
 const idStoreLogo = ref()
+const confirm = useConfirm();
+const toast = useToast();
+
 
 const fetchStores = async () => {
     try {
@@ -88,6 +93,7 @@ const uploadLogo = async (event) => {
         const response = await fetch(`${apiUrl}/stores/${idStoreLogo.value}/upload_logo`, {
             method: 'PATCH',
             headers: {
+                'Accept': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'X-API-KEY': `${apiCredential}`,
             },
@@ -106,11 +112,50 @@ const uploadLogo = async (event) => {
     fetchStores()
 }
 
+const deleteStore = async (storeId: number) => {
+    
+    try {
+        const response = await fetch(`${apiUrl}/stores/${storeId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'X-API-KEY': `${apiCredential}`,
+            }
+        
+        });
+        const data = await response.json()
+        console.log('Deletada', data)
+    } catch (error) {
+        console.error('Erro ao deletar', error)
+    }
+    fetchStores()
+}
+
+const deleteConfirmation = (storeId:number) => {
+    confirm.require({
+        message: 'Você tem certeza que quer deletar?',
+        header: 'Cuidado!!!',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancelar',
+        acceptLabel: 'Deletar',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: () => {
+            toast.add({ severity: 'info', summary: 'Confirmado!', detail: 'Registro Deletado', life: 3000 });
+            deleteStore(storeId)
+        },
+        reject: () => {
+            // toast.add({ severity: 'error', summary: 'Cancelado!', detail: '', life: 3000 });
+        }
+    });
+};
+
+
 </script>
 
 <template>
     <div>
-        <h1 class="mt-20 text-center"> Administre as suas <strong>Lojas</strong></h1>
+        <h1 class="mt-10 text-center"> Administre as suas <strong>Lojas</strong></h1>
 
         <div class="fixed bottom-20 right-20">
             <RouterLink :to="{ name: 'new-store' }">
@@ -127,7 +172,7 @@ const uploadLogo = async (event) => {
         </DialogPrime>
 
 
-        <div class="mt-20">
+        <div class="mt-10">
             <ul class="flex flex-col gap-4 ">
                 <li v-for="store in storesList" :key="store.id"
                     class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-5 rounded-md border border-amber-600 ">
@@ -147,19 +192,22 @@ const uploadLogo = async (event) => {
                     </h3>
                     <div class="flex text-amber-600 gap-2">
                         <label class="text-center" for="toogle-active"> {{ store.active ? 'Desativar' : 'Ativar' }}</label>
-                        <InputSwitch @change="toggleActive(store.id)" v-model="store.active"
+                        <InputSwitch class="swith" @change="toggleActive(store.id)" v-model="store.active"
                             inputId="toogle-active" />
                     </div>
+                    
                     <div class="flex gap-4">
                         <i @click="handleEditStore(store.id, store.name)"
                             class="pi pi-pen-to-square heartbeat cursor-pointer text-blue-500"
                             style="font-size: 1.5rem" 
                             v-tooltip="'Editar'"></i>
-                        <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"  v-tooltip="'Excluir'"></i>
+                        <i @click="deleteConfirmation(store.id)" class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"  v-tooltip="'Excluir'"></i>
                     </div>
                 </li>
             </ul>
         </div>
+        <ToastPrime></ToastPrime>
+        <ConfirmDialog></ConfirmDialog>
     </div>
 </template>
 
@@ -185,5 +233,10 @@ const uploadLogo = async (event) => {
 
 .logo-image{
     width: 2em;
+}
+
+.swith{
+    max-width: 48px;
+    max-height: 25px;
 }
 </style>

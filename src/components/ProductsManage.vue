@@ -154,7 +154,7 @@ const uploadProductImage = async (event) => {
                         </h3>
                         <div class="flex text-center text-amber-600 gap-2">
                             <label for="toogle-active"> {{ product.active ? 'Desativar' : 'Ativar' }}</label>
-                            <InputSwitch @change="toggleActive(product.id)" v-model="product.active"
+                            <InputSwitch class="swith" @change="toggleActive(product.id)" v-model="product.active"
                                 inputId="toogle-active" />
                         </div>
                         <div class="flex gap-4">
@@ -187,6 +187,11 @@ const uploadProductImage = async (event) => {
 
 .image{
     width: 2em;
+}
+
+.swith{
+    max-width: 48px;
+    max-height: 25px;
 }
 
 </style>
