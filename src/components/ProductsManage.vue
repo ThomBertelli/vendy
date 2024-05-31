@@ -4,6 +4,8 @@ import { useStore } from '../stores/useStore';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useProduct } from '../stores/useProduct';
 import { useRouter } from 'vue-router';
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 
 const router = useRouter()
 const store = useStore();
@@ -16,6 +18,9 @@ const productsList = ref();
 const productId = ref()
 const loading = ref(false);
 const visible = ref(false);
+const confirm = useConfirm();
+const toast = useToast();
+
 
 const fetchProducts = async () => {
     loading.value = true;
@@ -114,6 +119,44 @@ const uploadProductImage = async (event) => {
     fetchProducts()
 }
 
+const deleteProduct = async (productId: number) => {
+    
+    try {
+        const response = await fetch(`${apiUrl}/products/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'X-API-KEY': `${apiCredential}`,
+            }
+        
+        });
+        const data = await response.json()
+        console.log('Deletada', data)
+    } catch (error) {
+        console.error('Erro ao deletar', error)
+    }
+    fetchProducts()
+}
+
+const deleteConfirmation = (storeId:number) => {
+    confirm.require({
+        message: 'Você tem certeza?',
+        header: 'Cuidado!!!',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancelar',
+        acceptLabel: 'Deletar',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: () => {
+            toast.add({ severity: 'info', summary: 'Confirmado!', detail: 'Registro Deletado', life: 3000 });
+            deleteProduct(storeId)
+        },
+        reject: () => {
+            // toast.add({ severity: 'error', summary: 'Cancelado!', detail: '', life: 3000 });
+        }
+    });
+};
+
 </script>
 
 <template>
@@ -162,7 +205,7 @@ const uploadProductImage = async (event) => {
                                 class="pi pi-pen-to-square heartbeat cursor-pointer text-blue-500"
                                 style="font-size: 1.5rem"
                                 v-tooltip="'Editar'"></i>
-                            <i class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem" v-tooltip="'Excluir'"></i>
+                            <i @click="deleteConfirmation(product.id)" class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem" v-tooltip="'Excluir'"></i>
                         </div>
                     </li>
                 </ul>
@@ -179,7 +222,8 @@ const uploadProductImage = async (event) => {
                 <ButtonPrime>Cadastrar Produto</ButtonPrime>
             </RouterLink>
         </div>
-
+        <ToastPrime></ToastPrime>
+        <ConfirmDialog></ConfirmDialog>
     </div>
 </template>
 

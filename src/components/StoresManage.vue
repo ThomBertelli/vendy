@@ -133,7 +133,7 @@ const deleteStore = async (storeId: number) => {
 
 const deleteConfirmation = (storeId:number) => {
     confirm.require({
-        message: 'Você tem certeza que quer deletar?',
+        message: 'Você tem certeza ?',
         header: 'Cuidado!!!',
         icon: 'pi pi-info-circle',
         rejectLabel: 'Cancelar',
