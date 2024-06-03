@@ -175,7 +175,7 @@ const deleteConfirmation = (storeId:number) => {
         <div class="mt-10">
             <ul class="flex flex-col gap-4 ">
                 <li v-for="store in storesList" :key="store.id"
-                    class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-5 rounded-md border border-amber-600 ">
+                    class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-5 rounded-md border border-indigo-500 ">
                     <div @click="visible=true, setIdStoreLogo(store.id)" v-if="store.logo_url" class="cursor-pointer"  v-tooltip="'Mudar Logo'">
                         <img class="logo-image"  :src="store.logo_url" alt="">
 
@@ -185,12 +185,12 @@ const deleteConfirmation = (storeId:number) => {
                         
                     </div>
 
-                    <h3 class="store-name text-center flex-1 text-xl text-amber-600"
+                    <h3 class="store-name text-center flex-1 text-xl text-indigo-700"
                         @click="redirectToProducts(store.id, store.name)"
                         v-tooltip="'Ver produtos'">
                         {{ store.name }}
                     </h3>
-                    <div class="flex text-amber-600 gap-2">
+                    <div class="flex items-center text-indigo-700 gap-2">
                         <label class="text-center" for="toogle-active"> {{ store.active ? 'Desativar' : 'Ativar' }}</label>
                         <InputSwitch class="swith" @change="toggleActive(store.id)" v-model="store.active"
                             inputId="toogle-active" />

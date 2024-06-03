@@ -161,7 +161,7 @@ const deleteConfirmation = (storeId:number) => {
 
 <template>
     <div>
-        <h1 class="mt-10 text-center">Produtos da loja <strong>{{ storeName }}</strong></h1>
+        <h1 class="mt-10 text-center ">Produtos da loja <strong>{{ storeName }}</strong></h1>
         <ProgressSpinner v-if="loading"></ProgressSpinner>
         <div class="mt-10">
             <div class="flex flex-col items-center">
@@ -176,7 +176,7 @@ const deleteConfirmation = (storeId:number) => {
 
                 <ul class="flex flex-col gap-2 ">
                     <li v-for="product in productsList" :key="product.id"
-                        class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-11 rounded-md border border-amber-600 ">
+                        class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-11 rounded-md border border-indigo-700 ">
                         <div @click="visible = true, setIdProduct(product.id)" v-if="product.image_url"
                             class="cursor-pointer" v-tooltip="'Mudar imagem'">
                             <img class="image" :src="product.image_url" alt="">
@@ -189,13 +189,13 @@ const deleteConfirmation = (storeId:number) => {
                         </div>
 
 
-                        <h3 class="flex-1 text-xl text-amber-600">
+                        <h3 class="flex-1 text-xl text-indigo-700">
                             {{ product.title }}
                         </h3>
-                        <h3 class="text-xl text-amber-600">
+                        <h3 class="text-xl text-indigo-700">
                             {{ product.price }}
                         </h3>
-                        <div class="flex text-center text-amber-600 gap-2">
+                        <div class="flex items-center text-indigo-700 gap-2">
                             <label for="toogle-active"> {{ product.active ? 'Desativar' : 'Ativar' }}</label>
                             <InputSwitch class="swith" @change="toggleActive(product.id)" v-model="product.active"
                                 inputId="toogle-active" />

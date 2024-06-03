@@ -103,3 +103,7 @@
         animation-timing-function: ease-out;
     }
 }
+
+h1{
+    font-size: 1.5em;
+}

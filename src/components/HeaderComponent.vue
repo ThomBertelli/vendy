@@ -66,13 +66,13 @@ const signOut = () => {
 <style scoped >
      .custom-button{
         background-color: white;
-        color: #f59e0b ;
-        border: solid #f59e0b 1px;
+        color: #4e5fbb ;
+        border: solid #4e5fbb 1px;
     }
 
     .custom-buttom :hover{
-        color: #d97706;
-        border: #d97706;
+        color: #2e386e;
+        border: #2e386e;
     }
     
 </style>
