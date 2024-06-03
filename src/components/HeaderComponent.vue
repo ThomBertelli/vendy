@@ -25,7 +25,7 @@ const signOut = () => {
             <RouterLink :to="{name: 'home'}">
                 <i class="pi pi-home text-3xl"></i>
             </RouterLink>
-            <h1>Delivery - Logistas</h1>
+            <h1 class="font-bold">Delivery - Logistas</h1>
         </div>
         <div class="flex flex-col ">
         <template v-if="isLoggedIn">
@@ -35,7 +35,7 @@ const signOut = () => {
                 </div>
                 <div class="flex gap-2">
                     <nav>
-                        <ButtonPrime class="custom-button" @click="signOut">Sair</ButtonPrime>
+                        <ButtonPrime outlined  @click="signOut">Sair</ButtonPrime>
                     </nav>
                     <nav>
                         <ButtonPrime  >
@@ -64,15 +64,6 @@ const signOut = () => {
 </template>
 
 <style scoped >
-     .custom-button{
-        background-color: white;
-        color: #4e5fbb ;
-        border: solid #4e5fbb 1px;
-    }
-
-    .custom-buttom :hover{
-        color: #2e386e;
-        border: #2e386e;
-    }
+    
     
 </style>

@@ -142,11 +142,12 @@ const deleteConfirmation = (storeId:number) => {
     confirm.require({
         message: 'Você tem certeza?',
         header: 'Cuidado!!!',
-        icon: 'pi pi-info-circle',
+        icon: 'pi pi-exclamation-circle',
         rejectLabel: 'Cancelar',
         acceptLabel: 'Deletar',
-        rejectClass: 'p-button-secondary p-button-outlined',
+        rejectClass: 'p-button-contrast p-button-outlined',
         acceptClass: 'p-button-danger',
+        
         accept: () => {
             toast.add({ severity: 'info', summary: 'Confirmado!', detail: 'Registro Deletado', life: 3000 });
             deleteProduct(storeId)
@@ -237,5 +238,7 @@ const deleteConfirmation = (storeId:number) => {
     max-width: 48px;
     max-height: 25px;
 }
+
+
 
 </style>
