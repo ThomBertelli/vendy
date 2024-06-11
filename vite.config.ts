@@ -24,5 +24,8 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,  // Ensure source maps are enabled
+  },
+  server:{
+    port: 5183
   }
 })

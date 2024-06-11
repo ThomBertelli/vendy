@@ -38,7 +38,7 @@ const fetchStores = async () => {
     }
 }
 
-onMounted(() => { fetchStores() })
+onMounted(() => { fetchStores(),console.log(storesList) })
 
 const redirectToProducts = (id: string, storeName: string) => {
     storePinia.setCurrentStore(id, storeName);
