@@ -26,7 +26,7 @@ const onSubmit = async () => {
         await authStore.signIn(email.value || '', password.value || '', remember.value, () => {
             showSuccessToast();
             setTimeout(() => {
-                router.push('/')
+                router.push('/stores')
             }, 3005)
         }, () => {
             showErrorToast('Email e/ou senha incorretos!');

@@ -150,6 +150,10 @@ const deleteConfirmation = (storeId:number) => {
     });
 };
 
+const takeOrders = (storeId, storeName) =>{
+    storePinia.setCurrentStore(storeId, storeName);
+    router.push({ name: 'take-order' });
+}
 
 </script>
 
@@ -173,8 +177,8 @@ const deleteConfirmation = (storeId:number) => {
 
 
         <div class="mt-10">
-            <ul class="flex flex-col gap-4 ">
-                <li v-for="store in storesList" :key="store.id"
+            <div class="flex flex-col gap-4 ">
+                <div v-for="store in storesList" :key="store.id"
                     class="items-center pt-2 pb-2 pl-6 pr-6 flex gap-5 rounded-md border border-indigo-500 ">
                     <div @click="visible=true, setIdStoreLogo(store.id)" v-if="store.logo_url" class="cursor-pointer"  v-tooltip="'Mudar Logo'">
                         <img class="logo-image"  :src="store.logo_url" alt="">
@@ -202,9 +206,10 @@ const deleteConfirmation = (storeId:number) => {
                             style="font-size: 1.5rem" 
                             v-tooltip="'Editar'"></i>
                         <i @click="deleteConfirmation(store.id)" class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"  v-tooltip="'Excluir'"></i>
+                        <i @click="takeOrders(store.id, store.name)" class="pi pi-receipt heartbeat cursor-pointer text-amber-500" v-tooltip="'Receber Pedidos'" style="font-size: 1.5rem"></i>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
         <ToastPrime></ToastPrime>
         <ConfirmDialog></ConfirmDialog>

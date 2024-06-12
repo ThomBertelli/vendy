@@ -53,6 +53,13 @@ const router = createRouter({
       component: () => import('../components/EditProduct.vue'),
       
     },
+    {
+      path: '/take-order',
+      name: 'take-order',
+      component: () => import('../components/TakeOrderComponent.vue'),
+      
+    },
+
 
   ]
 })
