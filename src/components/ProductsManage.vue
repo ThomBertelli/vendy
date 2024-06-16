@@ -53,7 +53,6 @@ const fetchProducts = async () => {
 
 onMounted(() => {
     fetchProducts()
-    console.log(productsList)
 })
 
 

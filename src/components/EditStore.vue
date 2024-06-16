@@ -29,7 +29,7 @@ const updateStore = async (event: Event) => {
     event.preventDefault()
     const name = storeName.value
     const id = storeId.value
-    const body = {
+    const body = { 
         store: {
             name: name
         }
