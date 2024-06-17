@@ -2,7 +2,7 @@
 import InputText from 'primevue/inputtext'
 import ButtonPrime from 'primevue/button'
 import { useToast } from 'primevue/usetoast'
-import { computed, watch, ref } from 'vue'
+import { computed, watch, ref, onMounted } from 'vue'
 import { useStore } from '../stores/useStore'
 import { useRouter } from 'vue-router'
 import { useConfirm } from "primevue/useconfirm";
@@ -20,8 +20,10 @@ const storeName = computed({
     set: (value: string) => store.setCurrentStore(storeId.value, value)
 })
 
-const hasNewOrder = ref()
 const newOrder = ref()
+const acceptedOrders = ref([])
+
+
 let controller;
 
 const openSSE = async () => {
@@ -50,9 +52,9 @@ const openSSE = async () => {
             if (msg.event === 'new-order') {
                 let data = JSON.parse(msg.data)
                 newOrder.value = data.order
-                hasNewOrder.value = true
+
             } else {
-                hasNewOrder.value = false
+                console.log('nothing new here')
             }
         }
 
@@ -61,21 +63,14 @@ const openSSE = async () => {
 
 }
 
-const closeSSE = () => {
-    if (controller) {
-        controller.abort();
-        console.log('SSE connection closed');
-    }
-};
-
-const updateOrder = async(id,orderState)=>{
+const updateOrder = async (id, orderState) => {
     try {
         const url = `${apiUrl}/orders/${id}/update_state`;
-        const body = { 
+        const body = {
             order: {
                 state: orderState
             }
-        }  
+        }
         const response = await fetch(url, {
             method: 'PATCH',
             headers: {
@@ -115,11 +110,12 @@ const showNewOrder = (id) => {
         acceptLabel: 'Aceitar',
         accept: () => {
             toast.add({ severity: 'info', summary: 'Aceito', detail: 'Pedido aceito', life: 3000 });
-            updateOrder(id,'accepted')
+            acceptedOrders.value.push(newOrder)
+            updateOrder(id, 'accepted')
         },
         reject: () => {
             toast.add({ severity: 'error', summary: 'Rejeitado', detail: 'Pedido rejeitado', life: 3000 });
-            updateOrder(id,'rejected')
+            updateOrder(id, 'rejected')
         }
     });
 };
@@ -128,34 +124,53 @@ const showNewOrder = (id) => {
 watch(newOrder, (newValue, oldValue) => {
     console.log(newValue)
     showNewOrder(newValue.id)
-    closeSSE();
+
+});
+
+onMounted(() => {
+    openSSE()
 });
 
 
+const removeAcceptedOrder = (index) => {
+    acceptedOrders.value.splice(index, 1);
+    }
 
 </script>
 
 <template>
-    <div>
-        <h1>Recebendo pedidos de <strong>{{ storeName }}</strong></h1>
-        <a @click="openSSE()">vai</a>
-    </div>
-
-    <ConfirmDialog group="templating">
-        <template #message="slotProps">
-            <div class="flex flex-col align-items-center w-full gap-3 border-bottom-1 surface-border">
-
-                <div>
-                    <h3 class="font-bold">{{ slotProps.message.message }}</h3>
-                </div>
-                <div  v-for="items in newOrder.order_items" :key="items.id">
-                    <a>{{ items.amount }} x {{ items.product.title }}</a>
+    <div class="flex flex-col">
+        <div class="text-center">
+            <h1>Recebendo pedidos de <strong>{{ storeName }}</strong></h1>
+            
+        </div>
+        <div v-for="(order,index) in acceptedOrders" :key="index">
+            <div
+                class=" pt-40 px-10 items-center w-screen grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+                <div
+                    class=" cursor-pointer transition-transform duration-400 hover:scale-105 p-card px-4 py-5 flex justify-between items-center">
+                    <div class="flex justify-between items-center">
+                        <h2 class="font-bold text-black"> Pedido nº {{ order.value.id }}</h2>
+                    </div>
+                    <ButtonPrime @click="updateOrder(newOrder.id,'sended'); removeAcceptedOrder(index)">Saiu para Entrega</ButtonPrime>
                 </div>
             </div>
-        </template>
-    </ConfirmDialog>
+        </div>
 
+        <ConfirmDialog group="templating">
+            <template #message="slotProps">
+                <div class="flex flex-col align-items-center w-full gap-3 border-bottom-1 surface-border">
+                    <div>
+                        <h3 class="font-bold">{{ slotProps.message.message }}</h3>
+                    </div>
+                    <div v-for="items in newOrder.order_items" :key="items.id">
+                        <a>{{ items.amount }} x {{ items.product.title }}</a>
+                    </div>
+                </div>
+            </template>
+        </ConfirmDialog>
 
+    </div>
 
 </template>
 
