@@ -26,6 +26,7 @@ const signOut = () => {
                 <i class="pi pi-home text-3xl"></i>
             </RouterLink>
             <h1 class="font-bold">Delivery - Logistas</h1>
+            
         </div>
         <div class="flex flex-col ">
         <template v-if="isLoggedIn">

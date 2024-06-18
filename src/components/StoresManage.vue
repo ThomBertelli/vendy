@@ -170,7 +170,7 @@ const takeOrders = (storeId, storeName) =>{
         <DialogPrime v-model:visible="visible" modal header="Editar Logo"  :style="{ width: '25rem' }">
 
             <div>
-                <FileUpload chooseLabel="Selecionar " mode="basic" @uploader="uploadLogo($event)" accept="image/*" :maxFileSize="1000000" :multiple="false" name="logo[]" :customUpload="true" />
+                <FileUpload chooseLabel="Selecionar " mode="basic" @uploader="uploadLogo($event)" accept="image/*" :maxFileSize="2000000" :multiple="false" name="logo[]" :customUpload="true" />
             </div>
 
         </DialogPrime>
