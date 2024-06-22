@@ -78,7 +78,7 @@ const updateProduct = async (event: Event) => {
 </script>
 
 <template>
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center h-screen justify-center">
         <h1>Editar Produto</h1>
         <form class="flex flex-col gap-8 mt-10" @submit.prevent="updateProduct">
             <FloatLabel>

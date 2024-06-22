@@ -158,7 +158,7 @@ const takeOrders = (storeId, storeName) =>{
 </script>
 
 <template>
-    <div>
+    <div class="py-40 ">
         <h1 class="mt-10 text-center"> Administre as suas <strong>Lojas</strong></h1>
 
         <div class="fixed bottom-20 right-20">

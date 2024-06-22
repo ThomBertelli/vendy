@@ -174,7 +174,7 @@ const showMore = () =>{
 </script>
 
 <template>
-    <div class="flex flex-col py-40 ">
+    <div class="flex flex-col py-40 items-center ">
         <h1 class="mt-10 text-center ">Produtos da loja <strong>{{ storeName }}</strong></h1>
         <ProgressSpinner v-if="loading"></ProgressSpinner>
         <div class="mt-10">
@@ -230,8 +230,8 @@ const showMore = () =>{
 
 
         </div>
-        <div v-if="pageNumber < totalPages">
-            <ButtonPrime @click="showMore">Mostrar mais</ButtonPrime>
+        <div v-if="pageNumber < totalPages" class="mt-10" >
+            <ButtonPrime outlined @click="showMore">Mostrar mais</ButtonPrime>
         </div>
         <div class="fixed bottom-20 right-20">
             <RouterLink :to="{ name: 'new-product' }">
@@ -252,6 +252,7 @@ const showMore = () =>{
 .swith{
     max-width: 48px;
     max-height: 25px;
+    z-index: -1;
 }
 
 

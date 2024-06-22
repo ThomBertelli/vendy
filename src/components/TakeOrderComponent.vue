@@ -139,7 +139,7 @@ const removeAcceptedOrder = (index) => {
 </script>
 
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col h-screen justify-center">
         <div class="text-center">
             <h1>Recebendo pedidos de <strong>{{ storeName }}</strong></h1>
             
