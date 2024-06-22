@@ -45,7 +45,7 @@ const onSubmit = async () => {
 </script>
 
 <template>
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col justify-center items-center h-screen">
         <h1>Faça seu <strong>Cadastro</strong></h1>
 
         <form class="flex flex-col gap-8 mt-10  " @submit.prevent="onSubmit">
