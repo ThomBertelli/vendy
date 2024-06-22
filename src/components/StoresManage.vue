@@ -9,17 +9,19 @@ import { useToast } from "primevue/usetoast";
 const apiCredential = import.meta.env.VITE_API_CREDENTIAL
 const apiUrl = import.meta.env.VITE_API_URL;
 const router = useRouter();
-const storesList = ref()
+const storesList = ref([])
 const storePinia = useStore();
 const visible = ref(false);
 const idStoreLogo = ref()
 const confirm = useConfirm();
 const toast = useToast();
+const totalPages = ref()
+const pageNumber = ref(1)
 
 
 const fetchStores = async () => {
     try {
-        const response = await fetch(`${apiUrl}/stores`, {
+        const response = await fetch(`${apiUrl}/stores?page=${pageNumber.value}`, {
             headers: {
                 'Accept': 'application/json',
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -31,7 +33,14 @@ const fetchStores = async () => {
             throw new Error('Erro ao buscar lojas')
         }
         const data = await response.json()
-        storesList.value = data
+        console.log(data)
+        for(let store of data.result.stores){
+            if(!storesList.value.includes(store)){
+                storesList.value.push(store)
+            }
+
+        }
+
 
     } catch (error) {
         console.error('Erro ao buscar lojas:', error)
@@ -155,6 +164,11 @@ const takeOrders = (storeId, storeName) =>{
     router.push({ name: 'take-order' });
 }
 
+const showMore = () =>{
+    pageNumber.value++
+    fetchStores()
+}
+
 </script>
 
 <template>
@@ -210,6 +224,9 @@ const takeOrders = (storeId, storeName) =>{
                     </div>
                 </div>
             </div>
+        </div>
+        <div v-if="pageNumber < totalPages" class="mt-10" >
+            <ButtonPrime outlined @click="showMore">Mostrar mais</ButtonPrime>
         </div>
         <ToastPrime></ToastPrime>
         <ConfirmDialog></ConfirmDialog>
