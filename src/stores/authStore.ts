@@ -36,6 +36,10 @@ export const useAuthStore = defineStore('auth', () => {
         onSuccess();
     };
 
+    const successSignUp = (onSuccess: ()=> void) =>{
+        onSuccess()
+    }
+
     const failure = (onFailure: () => void) => {
         onFailure();
     };
@@ -92,7 +96,7 @@ export const useAuthStore = defineStore('auth', () => {
             });
             if (response.ok) {
                 const json = await response.json();
-                success(json, onSuccess);
+                successSignUp(onSuccess)
             } else {
                 failure(onFailure);
             }
