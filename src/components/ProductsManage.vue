@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router';
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
+
 const router = useRouter()
 const store = useStore();
 const storeId = computed(() => store.currentStore.id);
@@ -14,12 +15,15 @@ const storeName = computed(() => store.currentStore.name);
 const productPinia = useProduct();
 const apiUrl = import.meta.env.VITE_API_URL;
 const apiCredential = import.meta.env.VITE_API_CREDENTIAL
-const productsList = ref();
+const productsList = ref([]);
 const productId = ref()
 const loading = ref(false);
 const visible = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
+const totalPages = ref()
+
+const pageNumber = ref(1)
 
 
 const fetchProducts = async () => {
@@ -27,7 +31,7 @@ const fetchProducts = async () => {
 
 
     try {
-        const response = await fetch(`${apiUrl}/stores/${storeId.value}/products?locale=pt-BR`, {
+        const response = await fetch(`${apiUrl}/stores/${storeId.value}/products?page=${pageNumber.value}&locale=pt-BR`, {
             headers: {
                 'Accept': 'application/json',
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -43,8 +47,13 @@ const fetchProducts = async () => {
         }
         loading.value = false
         const data = await response.json()
-
-        productsList.value = data.result.products
+        totalPages.value = data.result.pagination.pages
+        for(let product of data.result.products){
+            console.log(product)
+            if (!productsList.value.includes(product)){
+                productsList.value.push(product)
+            }
+        }
 
     } catch (error) {
         console.error('Erro ao buscar produtos:', error)
@@ -157,10 +166,15 @@ const deleteConfirmation = (storeId:number) => {
     });
 };
 
+const showMore = () =>{
+    pageNumber.value++
+    fetchProducts()
+}
+
 </script>
 
 <template>
-    <div>
+    <div class="flex flex-col py-40 ">
         <h1 class="mt-10 text-center ">Produtos da loja <strong>{{ storeName }}</strong></h1>
         <ProgressSpinner v-if="loading"></ProgressSpinner>
         <div class="mt-10">
@@ -216,7 +230,9 @@ const deleteConfirmation = (storeId:number) => {
 
 
         </div>
-
+        <div v-if="pageNumber < totalPages">
+            <ButtonPrime @click="showMore">Mostrar mais</ButtonPrime>
+        </div>
         <div class="fixed bottom-20 right-20">
             <RouterLink :to="{ name: 'new-product' }">
                 <ButtonPrime>Cadastrar Produto</ButtonPrime>
