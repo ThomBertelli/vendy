@@ -20,7 +20,7 @@ const signOut = () => {
 
 <template>
 
-    <div class="flex justify-between w-full p-5 items-center bg-white z-100">
+    <div class=" absolute flex justify-between w-full p-5 items-center bg-white ">
         <div class="flex gap-2">
             <RouterLink :to="{name: 'home'}">
                 <i class="pi pi-home text-3xl"></i>
