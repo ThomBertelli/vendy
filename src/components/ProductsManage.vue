@@ -246,13 +246,13 @@ const showMore = () =>{
 <style scoped>
 
 .image{
-    width: 2em;
+    width: 2.5em;
+    height: 2em;
 }
 
 .swith{
     max-width: 48px;
-    max-height: 25px;
-    z-index: -1;
+    
 }
 
 
