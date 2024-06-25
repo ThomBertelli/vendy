@@ -48,12 +48,7 @@ const fetchProducts = async () => {
         loading.value = false
         const data = await response.json()
         totalPages.value = data.result.pagination.pages
-        for(let product of data.result.products){
-            console.log(product)
-            if (!productsList.value.includes(product)){
-                productsList.value.push(product)
-            }
-        }
+        productsList.value = [...productsList.value, ...data.result.products]
 
     } catch (error) {
         console.error('Erro ao buscar produtos:', error)
@@ -120,11 +115,15 @@ const uploadProductImage = async (event) => {
         }
 
         const data = await response.json()
+        
         console.log('Imagem enviada com sucesso', data)
     } catch (error) {
         console.error('Erro ao enviar a imagem', error)
     }
+    productsList.value = []
+    pageNumber.value = 1
     fetchProducts()
+    
 }
 
 const deleteProduct = async (productId: number) => {
@@ -139,10 +138,12 @@ const deleteProduct = async (productId: number) => {
         
         });
         const data = await response.json()
-        console.log('Deletada', data)
+        
     } catch (error) {
         console.error('Erro ao deletar', error)
     }
+    productsList.value = []
+    pageNumber.value = 1
     fetchProducts()
 }
 
