@@ -118,6 +118,8 @@ const uploadLogo = async (event) => {
     } catch (error) {
         console.error('Erro ao enviar a imagem', error)
     }
+    storesList.value = []
+    pageNumber.value = 1
     fetchStores()
 }
 
@@ -137,6 +139,8 @@ const deleteStore = async (storeId: number) => {
     } catch (error) {
         console.error('Erro ao deletar', error)
     }
+    storesList.value = []
+    pageNumber.value = 1
     fetchStores()
 }
 
