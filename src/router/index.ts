@@ -59,6 +59,11 @@ const router = createRouter({
       component: () => import('../components/TakeOrderComponent.vue'),
       
     },
+    {
+      path:'/user',
+      name:'user',
+      component: () => import('../components/UserProfileEdit.vue'),
+    }
 
 
   ]
