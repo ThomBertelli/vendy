@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast';
 import { useAuthStore } from '@/stores/authStore';
+import { useConfirm } from "primevue/useconfirm";
 
+const confirm = useConfirm();
 const authStore = useAuthStore();
 const toast = useToast();
-const router = useRouter()
 const email = ref('')
 const currentPassword = ref('')
 const newPassword = ref('')
@@ -88,6 +88,49 @@ const onSubmit = async () => {
     }
 }
 
+const deleteConfirmation = () => {
+    confirm.require({
+        message: 'Você tem certeza ? Essa operação não pode ser desfeita!',
+        header: 'Cuidado!!!',
+        icon: 'pi pi-exclamation-circle',
+        rejectLabel: 'Cancelar',
+        acceptLabel: 'Deletar',
+        rejectClass: 'p-button-contrast p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: () => {
+            toast.add({ severity: 'info', summary: 'Confirmado!', detail: 'Registro Deletado', life: 3000 });
+            deleteUser()
+            
+        },
+        reject: () => {
+            // toast.add({ severity: 'error', summary: 'Cancelado!', detail: '', life: 3000 });
+        }
+    });
+};
+
+
+
+
+const deleteUser = async () => {
+    
+    try {
+        const response = await fetch(`${apiUrl}/user/${userId.value}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'X-API-KEY': `${apiCredential}`,
+            }
+        
+        });
+        const data = await response.json()
+        console.log('Deletada', data)
+        signOut()
+    } catch (error) {
+        console.error('Erro ao deletar', error)
+    }
+
+}
+
 onMounted(() => { getUser() })
 
 </script>
@@ -133,7 +176,9 @@ onMounted(() => { getUser() })
             <ToastPrime class="bg-white" />
 
             <ButtonPrime type="submit" label="Atualizar" />
+            <ButtonPrime @click="deleteConfirmation()" severity="danger" label="Excluir Conta" ></ButtonPrime>
         </form>
+        <ConfirmDialog></ConfirmDialog>
     </div>
 </template>
 

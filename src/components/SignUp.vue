@@ -32,7 +32,7 @@ const onSubmit = async () => {
         await authStore.signUp(email.value || '', password.value || '',  () => {
             showSuccessToast();
             setTimeout(() => {
-                router.push('/')
+                router.push('/signin')
             }, 3005)
         }, () => {
             showErrorToast('Email já cadastrados!');
