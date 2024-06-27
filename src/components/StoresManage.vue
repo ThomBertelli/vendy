@@ -168,6 +168,11 @@ const takeOrders = (storeId, storeName) =>{
     router.push({ name: 'take-order' });
 }
 
+const ordersHistory = (storeId, storeName) =>{
+    storePinia.setCurrentStore(storeId,storeName);
+    router.push({ name: 'orders-history' });
+}
+
 const showMore = () =>{
     pageNumber.value++
     fetchStores()
@@ -224,6 +229,7 @@ const showMore = () =>{
                             style="font-size: 1.5rem" 
                             v-tooltip="'Editar'"></i>
                         <i @click="deleteConfirmation(store.id)" class="pi pi-trash heartbeat cursor-pointer text-red-500" style="font-size: 1.5rem"  v-tooltip="'Excluir'"></i>
+                        <i @click="ordersHistory(store.id, store.name)" class="pi pi-history heartbeat cursor-pointer" style="font-size: 1.5rem"  v-tooltip="'Histórico'"></i>
                         <i @click="takeOrders(store.id, store.name)" class="pi pi-receipt heartbeat cursor-pointer text-amber-500" v-tooltip="'Receber Pedidos'" style="font-size: 1.5rem"></i>
                     </div>
                 </div>

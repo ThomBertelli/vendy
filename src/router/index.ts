@@ -63,8 +63,12 @@ const router = createRouter({
       path:'/user',
       name:'user',
       component: () => import('../components/UserProfileEdit.vue'),
+    },
+    {
+      path:'/orders-history',
+      name:'orders-history',
+      component: () => import('../components/OrdersHistoryComponent.vue'),
     }
-
 
   ]
 })
