@@ -1,4 +1,4 @@
-# Vendy
+# Delivery
 
 Projeto desenvolvido durante o programa Quero Ser Dev da LSWA.
 
